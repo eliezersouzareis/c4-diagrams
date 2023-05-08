@@ -1,0 +1,25 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Commom User", "Uma pessoa com acesso a internet.")
+Container(db, "Database", "Relational Database Schema", "Armazenar as mensagens.")
+
+System_Boundary(feed, "FEED") {
+    Container(wa, "Web Application", "java and Spring MVC", "Conteúdo estático da plataforma.")
+    Container(spa, "Single Page Application", "javascript and angular", "Versão Web da aplicação.")
+    Container(api, "API Application", "java and String MVC", "Fornece a funcionalidade de enviar posts e noticias no feed")
+    Container(ma, "Mobile App", "Xamarin", "Aplicativo para celular.")
+
+    Rel(api, db, "Reads & writes to", "JDBC")
+    Rel(spa, api, "Uses", "JSON/HTTPS")
+    Rel(wa, spa, "Uses", "JSON/HTTPS")
+    Rel(ma, api, "Uses", "JSON/HTTPS")
+}
+
+Rel(comm, wa, "Uses")
+Rel(comm, spa, "Uses")
+Rel(comm, ma, "Uses")
+
+@enduml

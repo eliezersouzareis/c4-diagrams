@@ -1,0 +1,12 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Common User", "Uma pessoa com acesso a internet.")
+
+System(k2, "Feed", "Permite que os usuários se relacionem com amigos e comunidade, compartilhando momentos e noticias por meio de texto, fotos, vídeos, audio e arquivos.")
+
+Rel(comm, k2, "Uses")
+
+@enduml

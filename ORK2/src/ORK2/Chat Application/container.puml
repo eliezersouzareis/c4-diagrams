@@ -1,0 +1,33 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Commom User", "Uma pessoa com acesso a internet")
+Container(api, "API Application", "java and String MVC", "Fornece a funcionalidade de enviar e retorna mensagens")
+Container(db, "Database", "Relational Database Schema", "Armazena as mensagens enviadas e recebidas pelo usuário")
+
+Container_Boundary(MApp, "Mobile App - Chat") {
+    Component(msn, "Text Message", "MVC Rest Controlle", "Permite que os usuários enviem e recebam mensagem")
+    Component(mid, "Midia", "MVC Rest Controlle", "Permite que os usuários enviem e recebam mídias como vídeos, áudios e fotos")
+    Component(arq, "Archive", "MVC Rest Controlle", "Permite que os usuários enviem e recebam arquivos")
+    Component(lnk, "Link", "MVC Rest Controlle", "Permite que os usuários enviem e recebam links de sites")
+    Component(chm, "Call", "MVC Rest Controlle", "Permite que os usuários realizem chamadas de áudio")
+    Component(chmv, "Video call", "MVC Rest Controlle", "Permite que os usuários realizem chamadas de vídeo")
+    Component(cryp, "Cryptography Component", "Spring Bean", "Fornece a funcionalidade de criptografia de ponta a ponta que é um método de segurança que protege a comunicação entre dois ou mais usuários")
+
+    Rel(msn, cryp, "Uses")
+    Rel(mid, cryp, "Uses")
+    Rel(arq, cryp, "Uses")
+    Rel(lnk, cryp, "Uses")
+    Rel(cryp, api, "Read & write to")
+    Rel(api, db, "Uses", "JDBC")
+}
+
+Rel(comm, msn, "Uses")
+Rel(comm, mid, "Uses")
+Rel(comm, arq, "Uses")
+Rel(comm, lnk, "Uses")
+Rel(comm, chm, "Uses")
+Rel(comm, chmv, "Uses")
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Commom User", "Uma pessoa com acesso a internet.")
+Person(adm, "Administrator", "Administrador do sistema.")
+Person(mark, "Marketing", "Usuário com a função criar estratégias para tornar produtos ou serviços mais atraentes para os consumidores.")
+Person(finn, "Finance", "Usuário tem como função se concentrar em questões financeiras imediatas e gerenciamento.")
+
+System_Ext(bkon,"Banco Online","Armazena todas as principais informações bancárias sobre clientes, contas, transações, etc.")
+
+System_Boundary(k2, "ORK2") {
+    Container(wa, "Web Application", "java and Spring MVC", "Conteúdo estático da plataforma.")
+    Container(spa, "Single Page Application", "javascript and angular", "Versão Web da aplicação.")
+    Container(ma, "Mobile App", "Xamarin", "Aplicativo para celular.")
+    Container(db, "Database", "Relational Database Schema", "Armazena informações de registro de usuários, credenciais de autenticação com hash, logs de acesso, etc.")
+    Container(api, "API Application", "java and String MVC", "Fornece funcionalidade ao chat, feed de notícias, vendas, perfil, e outros.")
+
+    Rel(api, bkon, "Uses", "XML/HTTPS")
+    Rel(api, db, "Reads & writes to", "JDBC")
+    Rel(wa, spa, "Delivers")
+    Rel(spa, api, "Uses", "JSON/HTTPS")
+    Rel(ma, api, "Uses", "JSON/HTTPS")
+}
+
+Rel(comm, wa, "Uses", "HTTPS")
+Rel(adm, wa, "Uses", "HTTPS")
+Rel(mark, wa, "Uses", "HTTPS")
+Rel(finn, wa, "Uses", "HTTPS")
+
+Rel(comm, spa, "Uses")
+Rel(adm, spa, "Uses") 
+Rel(mark, spa, "Uses")
+Rel(finn, spa, "Uses")
+
+Rel(comm, ma, "Uses")
+Rel(adm, ma, "Uses")
+Rel(mark, ma, "Uses")
+Rel(finn, ma, "Uses")
+
+@enduml

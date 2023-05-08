@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Commom User", "Uma pessoa com acesso a internet.")
+Container(db, "Database", "Relational Database Schema", "Armazenar as mensagens.")
+
+System_Boundary(ch, "CHAT") {
+    Container(ma, "Mobile App", "Xamarin", "Aplicativo para celular.")
+    Container(api, "API Application", "java and String MVC", "Fornece a funcionalidade de enviar e retorna mensagens.")
+
+    Rel(api, db, "Reads & writes to", "JDBC")
+    Rel(ma, api, "Uses", "JSON/HTTPS")
+}
+
+Rel(comm, ma, "Uses")
+
+@enduml

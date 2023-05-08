@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Commom User", "Uma pessoa com acesso a internet")
+Container(api, "API Application", "java and String MVC", "Fornece a funcionalidade de enviar e retorna mensagens")
+Container(db, "Database", "Relational Database Schema", "Armazena as mensagens enviadas e recebidas pelo usuário")
+
+Container_Boundary(spa, "Single Page Application - Feed") {
+    Component(msn, "Text", "MVC Rest Controlle", "Permite que os usuários compartilhem posts que contenham texto")
+    Component(mid, "Midia", "MVC Rest Controlle", "Permite que os usuários compartilhem posts que contenham mídias como vídeos, áudios e fotos")
+    Component(arq, "Archive", "MVC Rest Controlle", "Permite que os usuários compartilhem posts que contenham arquivos")
+    Component(lnk, "Link", "MVC Rest Controlle", "Permite que os usuários compartilhem posts que contenham links de sites")
+
+    Rel(msn, api, "Uses")
+    Rel(mid, api, "Uses")
+    Rel(arq, api, "Uses")
+    Rel(lnk, api, "Uses")
+    Rel(api, db, "Uses", "JDBC")
+}
+
+Rel(comm, msn, "Uses")
+Rel(comm, mid, "Uses")
+Rel(comm, arq, "Uses")
+Rel(comm, lnk, "Uses")
+@enduml

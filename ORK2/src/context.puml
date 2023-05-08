@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(comm, "Common User", "Uma pessoa com acesso a internet.")
+Person(adm, "Administrator", "Administrador do sistema.")
+Person(mark, "Marketing", "Usuário com a função criar estratégias para tornar produtos ou serviços mais atraentes para os consumidores.")
+Person(finn, "Finance", "Usuário tem como função se concentrar em questões financeiras imediatas e gerenciamento.")
+
+System(k2, "ORK2", "Permite que os usuários se relacionem via chat, ou então compartilhem momentos de suas vidas para que os demais vejam.")
+
+System_Ext(bkon,"Banco Online","Armazena todas as principais informações bancárias sobre clientes, contas, transações, etc.") 
+
+Rel(comm, k2, "Uses")
+Rel(adm, k2, "Uses")
+Rel(mark, k2, "Uses")
+Rel(finn, k2, "Uses")
+Rel(k2, bkon, "Uses", "HTTPS")
+
+@enduml
